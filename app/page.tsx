@@ -125,6 +125,7 @@ const CORE_FEATURES = [
 
 export default function HomePage() {
   const [taskName, setTaskName] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
   const [taskPrompt, setTaskPrompt] = useState('');
   const [selectedFrequency, setSelectedFrequency] = useState('once');
   const [isCreating, setIsCreating] = useState(false);
@@ -174,6 +175,7 @@ export default function HomePage() {
 
       // 重置表单
       setTaskName('');
+      setTaskDescription('');
       setTaskPrompt('');
       setSelectedFrequency('once');
 
@@ -316,6 +318,20 @@ ${taskPrompt}
                   </div>
                 )}
               </div>
+            </div>
+
+            {/* 任务描述 */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                任务描述
+              </label>
+              <textarea
+                value={taskDescription}
+                onChange={(e) => setTaskDescription(e.target.value)}
+                placeholder="简要描述任务的目的..."
+                rows={2}
+                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              />
             </div>
 
             {/* 任务提示词 */}
@@ -464,6 +480,127 @@ ${taskPrompt}
               </button>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-white mb-4">
+              关于 Grok TaskPro 的常见问题
+            </h2>
+            <p className="text-xl text-gray-400">
+              还有其他问题？请随时联系我们
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {[
+              {
+                q: '如何创建一个定时任务？',
+                a: '在首页填写任务名称、选择执行频率、输入提示词，点击"创建任务"即可。支持单次、每日、每周和自定义Cron表达式。'
+              },
+              {
+                q: '免费版有多少次执行机会？',
+                a: '免费版每天提供3次任务执行和3次AI问答。升级到Pro专业版可享受无限次执行。'
+              },
+              {
+                q: '如何配置邮件通知？',
+                a: '在设置中配置您的邮箱地址，任务执行完成后会自动发送结果到您的邮箱。Pro专业版专属功能。'
+              },
+              {
+                q: '支持取消订阅吗？',
+                a: '当然！您可以随时在设置中取消订阅，没有任何额外费用或隐藏条款。'
+              }
+            ].map((faq, index) => (
+              <details
+                key={index}
+                className="group bg-gray-800 rounded-xl border border-gray-700 hover:border-gray-600 transition-all"
+              >
+                <summary className="cursor-pointer px-6 py-4 font-semibold text-white flex items-center justify-between">
+                  <span>❓ {faq.q}</span>
+                  <span className="text-2xl group-open:rotate-45 transition-transform">+</span>
+                </summary>
+                <div className="px-6 pb-4 text-gray-400">
+                  {faq.a}
+                </div>
+              </details>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <button className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white rounded-xl font-bold transition-all">
+              联系客服
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Task Showcase Section */}
+      <section className="container mx-auto px-4 py-16 bg-gradient-to-r from-blue-500/5 to-purple-500/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-white mb-4">
+              探索任务执行展示
+            </h2>
+            <p className="text-xl text-gray-400">
+              查看 AI 自动生成的内容和执行历史，了解系统的强大能力
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            {[
+              {
+                title: '每日科技新闻汇总',
+                status: '✅ 已完成',
+                time: '2025-01-13 08:00',
+                color: 'border-green-500',
+                bgColor: 'bg-green-500/10'
+              },
+              {
+                title: '行业动态分析',
+                status: '🔄 执行中',
+                time: '2025-01-13 09:00',
+                color: 'border-yellow-500',
+                bgColor: 'bg-yellow-500/10'
+              },
+              {
+                title: '技术趋势报告',
+                status: '⏳ 等待中',
+                time: '2025-01-13 10:00',
+                color: 'border-gray-500',
+                bgColor: 'bg-gray-500/10'
+              }
+            ].map((task, index) => (
+              <div
+                key={index}
+                className={`bg-gray-800 rounded-xl p-6 border-2 ${task.color} ${task.bgColor} hover:scale-105 transition-transform`}
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-2xl">📋</span>
+                  <h3 className="text-lg font-bold text-white">{task.title}</h3>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-400">状态:</span>
+                    <span className="font-semibold">{task.status}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-400">时间:</span>
+                    <span className="text-gray-300">{task.time}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <button className="px-8 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-bold transition-all flex items-center gap-2 mx-auto">
+              查看完整历史
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       </section>
 
